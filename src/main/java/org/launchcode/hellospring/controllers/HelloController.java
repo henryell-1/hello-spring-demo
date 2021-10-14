@@ -1,51 +1,50 @@
 package org.launchcode.hellospring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
 @RequestMapping("hello")
-
 public class HelloController {
 
-    //    // Handle request at path /hello
-//    @GetMapping("hello")
-//    @ResponseBody
-//    public String hello() {
-//        return "Hello, Spring!";
-//    }
-
-    // lives at /hello/goodbye
+    @GetMapping
+    public String hello() {
+        return "Hello, Spring!";
+    }
+    //lives at /hello/goodbye
     @GetMapping("goodbye")
     public String goodbye() {
+
         return "Goodbye, Spring!";
     }
 
-    // Handles requests of the form /hello?name=LaunchCode
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!";
+    // lives at hello/hello
+    //Handles request for form /hello?name= LaunchCode
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
+    public String helloWithQueryParams(@RequestParam String name){
+        return "Hello " + name + "!";
     }
 
-    // Handles requests of the form /hello/LaunchCode
-    @GetMapping("{name}")
-    public String helloWithPathParam(@PathVariable String name) {
-        return "Hello, " + name + "!";
+
+    //Handles request for form /hello/LaunchCode
+    @GetMapping("hello/{name}")
+    public String helloWithPathParams(@PathVariable String name){
+        return "Hello " + name + "!";
     }
 
-    // /hello/form
+    //lives at /hello/form
     @GetMapping("form")
-    public String helloForm() {
+    public String helloForm(){
         return "<html>" +
                 "<body>" +
-                "<form action = '/hello' method = 'post'>" + // submit a request to /hello
+                "<form action = 'hello' method = 'post'>" + // submit a request to /hello
                 "<input type = 'text' name = 'name' >" +
                 "<input type = 'submit' value = 'Greet Me!' >" +
                 "</form>" +
                 "</body>" +
                 "</html>";
     }
-
-
 }
